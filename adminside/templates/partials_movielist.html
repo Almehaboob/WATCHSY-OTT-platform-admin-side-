@@ -1,0 +1,15 @@
+<!-- partials/movie_list.html -->
+{% for movie in movies %}
+<tr>
+    <td>{{ movie.title }}</td>
+    <td class="action-buttons">
+        <a href="{% url 'viewmovie' movie.id %}" class="btn btn-sm btn-info">View</a>
+        <a href="{% url 'editmovie' movie.id %}" class="btn btn-sm btn-warning">Edit</a>
+        <a href="{% url 'deletemovie' movie.id %}" class="btn btn-sm btn-danger">Delete</a>
+    </td>
+</tr>
+{% empty %}
+<tr>
+    <td colspan="2" class="text-center">No movies found.</td>
+</tr>
+{% endfor %}

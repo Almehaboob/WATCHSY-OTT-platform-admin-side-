@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Movies - Admin
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <!-- Add Movie Button and Search Bar -->
+    <div class="d-flex justify-content-between mb-3">
+        <form id="search-form" class="d-flex" method="GET">
+            <input id="search-input" class="form-control me-2 search-bar" type="search" placeholder="Search Movies" name="q" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+        <a href="{% url 'addmovies' %}" class="btn btn-add-movie bg border-black">Add Movie</a>  <!-- Added border class -->
+    </div>
+
+    <!-- Movies Table -->
+    <table class="table table-bordered" style="background-color: rgba(255, 255, 255, 0.4);"> <!-- Slightly transparent white background -->
+        <thead class="table-dark">
+            <tr>
+                <th scope="col">Movie Title</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody id="movie-list">
+            {% include 'partials_movielist.html' with movies=page_obj %}
+        </tbody>
+    </table>
+    
+    <!-- Pagination (Can be updated to work with AJAX if needed) -->
+    <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+            {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+            {% endif %}
+            {% for page_num in page_obj.paginator.page_range %}
+                <li class="page-item {% if page_num == page_obj.number %}active{% endif %}">
+                    <a class="page-link" href="?page={{ page_num }}">{{ page_num }}</a>
+                </li>
+            {% endfor %}
+            {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+</div>
+
+<script>
+    const searchInput = document.getElementById("search-input");
+    const movieList = document.getElementById("movie-list");
+
+    searchInput.addEventListener("input", function(event) {
+        const query = event.target.value;
+        const url = `{% url 'movies' %}?q=${query}`;
+
+        fetch(url, {
+            headers: { 'X-Requested-With': 'XMLHttpRequest' }
+        })
+        .then(response => response.json())
+        .then(data => {
+            movieList.innerHTML = data.html;  // Replace movie list with response HTML
+        })
+        .catch(error => console.error("Error:", error));
+    });
+</script>
+{% endblock %}

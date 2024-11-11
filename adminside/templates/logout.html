@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}
+Logout
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    {% if user.is_authenticated %}
+                        <div class="alert alert-info" role="alert">
+                            You are currently logged in as <strong>{{ user.username }}</strong>.
+                        </div>
+                        <form action="{% url 'logout' %}" method="POST">  <!-- Link to logout URL -->
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger btn-block">Log Out</button>
+                        </form>
+                    {% else %}
+                        <div class="alert alert-warning" role="alert">
+                            You are not currently logged in.
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

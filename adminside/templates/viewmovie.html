@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    View Movie - {{ movie.title }}
+{% endblock %}
+
+{% block content %}
+    <div class="container mt-5 d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+        <div class="col-md-6">
+            <div class="card mb-3" style="max-width: 100%; background-color: rgba(255, 255, 255, 0.4);">
+                <img src="{{ movie.thumbnail }}" class="card-img-top" alt="{{ movie.title }} Thumbnail" style="max-width: 100%; height: auto;">
+                <div class="card-body text-center">
+                    <h1 class="card-title">{{ movie.title }}</h1>
+                    <a href="{{ movie.video }}" class="btn btn-warning" target="_blank">Watch Video</a>
+                    <h5 class="card-title mt-3">Description</h5>
+                    <p class="card-text">{{ movie.description }}</p>
+                    <div class="d-flex justify-content-center mt-4">
+                        <a href="{% url 'movies' %}" class="btn btn-dark">Back to Movies</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

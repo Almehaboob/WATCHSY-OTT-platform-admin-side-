@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Activity - {{ user.username }}
+{% endblock %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">Activity for {{ user.username }}</h2>
+
+        <div class="row">
+            <!-- Viewing History Table -->
+            <div class="col-md-6 mx-auto">
+                <h3 class="text-center">Watch History</h3>
+                <table class="table table-bordered" style="background-color: rgba(255, 255, 255, 0.6);">
+                    <thead>
+                        <tr>
+                            <th>Movie Name</th>
+                            <th>Watched Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for entry in watch_history %}
+                            <tr>
+                                <td>{{ entry.movie.title }}</td>
+                                <td>{{ entry.date }}</td>
+                            </tr>
+                        {% empty %}
+                            <tr>
+                                <td colspan="2" class="text-center">No watch history found for this user.</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Centered Back Button -->
+        <div class="text-center">
+            <a href="{% url 'users' %}" class="btn btn-secondary mt-4">Back</a>
+        </div>
+    </div>
+{% endblock %}

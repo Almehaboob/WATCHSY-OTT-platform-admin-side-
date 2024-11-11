@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+
+{% block title %}
+    Add Movie - Admin
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5 d-flex justify-content-center">
+    <div class="card p-4 shadow" style="max-width: 600px; width: 100%; background-color: rgba(255, 255, 255, 0.4)">
+        <h2 class="text-center mb-4">Add Movie</h2>
+        
+        <form method="POST" enctype="multipart/form-data" >
+            {% csrf_token %}
+            
+            {% if form.errors %}
+                <div class="alert alert-danger">
+                    <ul>
+                        {% for field, errors in form.errors.items %}
+                            <li><strong>{{ field }}:</strong> {{ errors|join:", " }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+
+            <div class="mb-3">
+                <label for="title" class="form-label">Title</label>
+                {{ form.title|add_class:"form-control" }}
+            </div>
+
+            <div class="mb-3">
+                <label for="thumbnail" class="form-label">Thumbnail URL</label>
+                {{ form.thumbnail|add_class:"form-control" }}
+            </div>
+
+            <div class="mb-3">
+                <label for="video" class="form-label">Video URL</label>
+                {{ form.video|add_class:"form-control" }}
+            </div>
+
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                {{ form.description|add_class:"form-control" }}
+            </div>
+
+            <div class="mb-3">
+                <label for="rating" class="form-label">Rating</label>
+                {{ form.rating|add_class:"form-control" }}
+            </div>
+
+            <div class="d-flex justify-content-between mt-4">
+                <button type="submit" class="btn btn-success">Add Movie</button>
+                <a href="{% url 'movies' %}" class="btn btn-dark">Back</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

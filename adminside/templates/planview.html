@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Plan Details
+{% endblock %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">Plan Details</h2>
+
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title">Plan Name: {{ plan.name }}</h3>
+                <p><strong>Price:</strong> {{plan.price}}</p>
+                <p><strong>Duration:</strong> {{plan.duration}}</p>
+                
+            </div>
+        </div>
+
+        <!-- Centered Back Button -->
+        <div class="text-center mt-4">
+            <a href="{% url 'plans' %}" class="btn btn-secondary">Back</a>
+        </div>
+    </div>
+{% endblock %}
